@@ -1,0 +1,91 @@
+/* Proper Styling Sheet */
+
+/* Fonts ----------------------------------------- */
+@font-face {
+  font-family: shermlock;
+  src: url("fonts/Shermlock.ttf");
+}
+
+/* Main Site ------------------------------------- */
+body {
+  background-image: url('backgrounds/khotan-skyway.png');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  font-family: Roboto, Arial, sans-serif;
+  
+  margin: 0 0;
+}
+
+h1 {
+  font-family: shermlock;
+}
+
+input, select {
+  background-color: RGBA(255, 255, 255, 0.3);
+  border: 2px solid RGBA(0, 0, 0, 0.3);
+  border-radius: 5px;
+  font-size: 10px;
+}
+
+.creatorbox {
+  position: absolute;
+  padding: 10px;
+  top: 5vh;
+  left: 5vw;
+  right: 5vw;
+  bottom: 5vh;
+  background-color: RGBA(251, 250, 241, 0.7);
+  border: 1px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #82501D;
+  box-shadow: 0px 0px 8px #000000;
+
+  color: black;
+  font-size: 10px;
+
+  overflow-y: scroll;
+}
+
+.creatorbox {
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+}
+.creatorbox::-webkit-scrollbar { display: none; }
+
+.creatorbox .even-smaller { font-size: 8px; }
+.creatorbox .tdLeft { text-align: left; }
+.creatorbox .ability-select { width: 110px; }
+.creatorbox .upper-left-select { width: 80px; }
+.creatorbox .upper-right-select { width: 100px; }
+.creatorbox .lower-left-select { width: 110px; }
+.creatorbox .lower-right-select { width: 68px; }
+
+.maincont {
+  padding: 0px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.input {
+  position: relative;
+  left: 0vw;
+  margin: 0 auto;
+}
+
+.resultholder {
+  position: relative;
+  left: 0vw;
+  width: 152px;
+  height: 256px;
+  margin: 0;
+
+  transform: scale(0.8, 0.8);
+}
+
+.creator select { color: black; box-shadow: none; text-align: left; }
+
+#tl-text,#tr-text,#bl-text,#br-text { cursor: context-menu; }
