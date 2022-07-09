@@ -388,15 +388,18 @@
 
       function updateTextTR() {
         let tx = document.getElementById("tr").value;
-        if (tx == "inf") {
-          document.getElementById("tr-text").hidden = true;
-          document.getElementById("inf").hidden = false;
-        } else {
-          document.getElementById("tr-text").innerHTML = tx;
-          let tp = document.getElementById("top-right").value;
-          if (tp == "range" || tp == "haste") {
+        let tp = document.getElementById("top-right").value;
+        if (tp == "range" || tp == "haste") {
+          if (tx == "inf") {
+            document.getElementById("tr-text").hidden = true;
+            document.getElementById("inf").hidden = false;
+          } else {
+            document.getElementById("tr-text").innerHTML = tx;
             document.getElementById("tr-text").hidden = false;
+            document.getElementById("inf").hidden = true;
           }
+        } else {
+          document.getElementById("tr-text").hidden = true;
           document.getElementById("inf").hidden = true;
         }
       }
@@ -917,13 +920,21 @@
       <div>
         <h1>Pirate101 Abilities Creator</h1>
         <p>
-          Ever wanted to create a custom Pirate101 Power?
+          Ever wanted to create a custom Pirate101 Power or Epic Talent?
           <br/>Now, you do that with ease! (mostly)
           <br/>Just fill in the blanks, and this page does the rest!
-          <br/>Note: does not save for you if you revisit the page.
-          <br/>(I advise saving notes in a text document in case you need to revisit an unfinished ability later on.)
+
           <br/><br/>
-          (works best on a computer, don't currently recommend using on mobile devices since I haven't tested those yet)
+          Note: does not auto-save for you if you revisit the page.
+          <br/>(I advise saving notes in a text document in case you need to revisit an unfinished idea later on.)
+
+          <br/><br/>
+          This works best on a computer. I don't currently recommend using this with mobile devices since I haven't tested those yet.
+          <br/>(main issue being font size inconsistency linked to browser interpretation, which does affect the end result)
+
+          <br/><br/>
+          Credits go to KingsIsle Entertainment for Pirate101.
+          <br/>Thanks for visiting / using this page!
         </p>
       </div>
 
