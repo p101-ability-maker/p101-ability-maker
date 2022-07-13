@@ -6,6 +6,11 @@
   src: url("fonts/Shermlock.ttf");
 }
 
+@font-face {
+  font-family: "Comic Sans MS";
+  src: url("fonts/comicbd.ttf");
+}
+
 /* Main Site ------------------------------------- */
 body {
   background-image: url('backgrounds/khotan-skyway.png');
