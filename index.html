@@ -2,22 +2,9 @@
 <html>
   <head>
     <title>P101 Ability Maker</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <meta name="description" content="Custom P101 Power + Talent maker. Create your own P101 abilities without having to do the hard work. Works best on computers." />
-    <meta name="keywords" content="pirate101, p101, pirate, power, talent, ability, creator, maker" />
-
-    <meta name="og:title" content="P101 Ability Maker" />
-    <meta name="og:url" content="https://p101-ability-maker.github.io" />
-    <meta name="og:description" content="Custom P101 Power + Talent maker. Create your own P101 abilities without having to do the hard work. Works best on computers." />
-<!-- need to get an icon
-    <meta name="og:image" content="https://github.com/cody-nightblade/cody-nightblade.github.io/blob/gh-pages/other-images/Scorp%20Corp.png?raw=true" />
-    <meta name="og:image:width" content="100" />
-    <meta name="og:image:height" content="100" />
--->
-
     <link rel="stylesheet" href="styles.css"/>
+
+    <meta name="viewport" content="initial-scale=1">
 
     <style>
       .creator input { width: auto; box-shadow: none; color: black; }
@@ -102,7 +89,7 @@
         padding: 0px;
 
         font-family: shermlock, Arial;
-        font-size: 15px; /* 15px = 1.5em */
+        font-size: 15px;
         color: #FCEF01;
         text-align: center;
         letter-spacing: 0.5px;
@@ -146,7 +133,7 @@
 
         /* font settings */
         font-family: "Comic Sans MS", Arial;
-        font-size: 12px; /* 12px = 1.2em */
+        font-size: 12px;
         line-height: 15px;
         font-weight: 600;
         color: black;
@@ -193,7 +180,7 @@
       #bg-download { color: blue; }
 
       .size150 {
-        font-size: 18px; /* 18px = 1.8em */
+        font-size: 18px;
       }
       .size150 .icon {
         width: 32px;
@@ -201,7 +188,7 @@
       }
 
       .size125 {
-        font-size: 17px; /* 17px = 1.7em */
+        font-size: 17px;
       }
       .size125 .icon {
         width: 24px;
@@ -219,16 +206,14 @@
 
       }
 */
-
     </style>
 
   </head>
 
   <body class="creator" onload="initialize()">
     <script>
-//      const title_space = " "; // actual space: 1/6 em
-//      const title_space = " "; // actual space: 1/4 em
-      const title_space = " "; // normal space
+      const title_space = " "; // actual space: 1/6 em
+//      const title_space = " "; // normal space
       function isUpperCase(c) { return c == c.toUpperCase(); }
 
       const key_icon = [
@@ -348,6 +333,7 @@
           document.getElementById("rnk-text").hidden = false;
         }
         updateRank();
+        toggleFrame();
       }
 
       function changeTitleFontSize() {
@@ -358,7 +344,7 @@
 
       function updateRank() {
         let tx = document.getElementById("rnk").value;
-        document.getElementById("rnk-text").innerHTML = "Rank " + tx;
+        document.getElementById("rnk-text").innerHTML = tx;
       }
 
       function updateTitle() {
@@ -478,7 +464,6 @@
       function updateDesc() {
         desc = document.getElementById("desc").value;
         desc = desc.replaceAll(String.fromCharCode(10),"</span><br/><span>");
-        desc = desc.replaceAll(" ", "</span><span> </span><span>");
 
         desc = "<span>" + desc;
         desc = desc.replaceAll("[", "</span>[");
@@ -508,10 +493,8 @@
 
         function customReplace(str, key, fp) {
           let cl = "icon";
-          let add_data = "";
           if (key == "[talent]") { cl = "iconL"; }
-          return str.replaceAll(key, "<img class='" + cl
-              + "' src='ability-creator-images/icons/"
+          return str.replaceAll(key, "<img class='" + cl + "' src='ability-creator-images/icons/"
               + fp + "'></img>");
         }
       }
@@ -595,6 +578,8 @@
 
       function toggleFrame() {
         if (document.getElementById("frame-toggle").checked) {
+          let b = document.getElementById("ability-type").value;
+          document.getElementById("main-image-frame").src = "ability-creator-images/" + b + "-frame-2.png";
           document.getElementById("main-image-frame").hidden = false;
         } else { document.getElementById("main-image-frame").hidden = true; }
       }
@@ -718,6 +703,7 @@
         }
 
         function drawTitleText() {
+          const nl = String.fromCharCode(10);
           newCtx.fillStyle = "#FCEF01";
 
           const ttlEle = document.getElementById("resultTitle");
@@ -730,21 +716,52 @@
 
           // line 1
           ttlTxt_1 = ttlTxt;
-          let newLine = false;
-          if (ttlTxt.indexOf(String.fromCharCode(10)) > -1) {
-            let place = ttlTxt.indexOf(String.fromCharCode(10));
-            ttlTxt_1 = ttlTxt.substring(0, place);
-            ttlTxt = ttlTxt.substring(place + 1);
-            newLine = true;
-          } else { ttlTxt = ""; }
+          ttlTxt = "";
+          if (ttlTxt_1.indexOf(nl) > -1) {
+            const place = ttlTxt_1.indexOf(nl);
+            ttlTxt = ttlTxt_1.substring(place + 1) + nl + ttlTxt;
+            ttlTxt_1 = ttlTxt_1.substring(0, place);
+          }
+          if (newCtx.measureText(ttlTxt_1).width > 132) {
+            let pl = ttlTxt_1.length - 1;
+            while (pl > -1 && newCtx.measureText(ttlTxt_1.substring(0, pl)).width > 132) {
+              pl--;
+            }
+            while (pl > -1 && ttlTxt_1.substring(pl, pl + 1) !== title_space) {
+              pl--;
+            }
+            if (pl > -1) {
+              ttlTxt = ttlTxt_1.substring(pl + 1) + nl + ttlTxt;
+              ttlTxt_1 = ttlTxt_1.substring(0, pl);
+            }
+          }
           newCtx.fillText(ttlTxt_1, 76, 28);
 
           // line 2
           ttlTxt_2 = ttlTxt;
-          if (ttlTxt.indexOf(String.fromCharCode(10)) > -1) {
-            let place = ttlTxt.indexOf(String.fromCharCode(10));
-            ttlTxt_2 = ttlTxt.substring(0, place);
-            ttlTxt = ttlTxt.substring(place + 1);
+          ttlTxt = "";
+          if (ttlTxt_2.indexOf(nl) > -1) {
+            const place = ttlTxt_2.indexOf(nl);
+            ttlTxt = ttlTxt_2.substring(place + 1) + nl + ttlTxt;
+            ttlTxt_2 = ttlTxt_2.substring(0, place);
+          }
+          if (newCtx.measureText(ttlTxt_2).width > 132) {
+            let pl = ttlTxt_2.length - 1;
+            while (pl > -1 && newCtx.measureText(ttlTxt_2.substring(0, pl)).width > 132) {
+              pl--;
+            }
+            while (pl > -1 && ttlTxt_2.substring(pl, pl + 1) !== title_space) {
+              pl--;
+            }
+            if (pl > -1) {
+              ttlTxt = ttlTxt_2.substring(pl + 1) + nl + ttlTxt;
+              ttlTxt_2 = ttlTxt_2.substring(0, pl);
+            }
+          }
+          if (ttlTxt_2.indexOf(nl) > -1) {
+            const place = ttlTxt_2.indexOf(nl);
+            ttlTxt = ttlTxt_2.substring(place + 1) + nl + ttlTxt;
+            ttlTxt_2 = ttlTxt_2.substring(0, place);
           }
           newCtx.fillText(ttlTxt_2, 76, 43);
 
@@ -847,7 +864,6 @@
 
           function drawAccompText(num) {
             const txtEle = document.getElementById(idList[num]);
-            if (txtEle.hidden == true) { return; }
             let txtFontSize = window.getComputedStyle(txtEle, null).getPropertyValue("font-size");
             newCtx.font = txtFontSize + " shermlock";
             let txtTxt = txtEle.innerHTML;
@@ -949,7 +965,10 @@
 
           <br/><br/>
           This works best on a computer. I don't currently recommend using this with mobile devices since I haven't tested those yet.
-          <br/>(main issue being font size inconsistency linked to what I assume is device / browser interpretation, which does affect the end result)
+          <br/>(main issue being font size inconsistency linked to browser interpretation, which does affect the end result)
+
+          <br/><br/>
+          For custom images: many of the large icons used in-game can be downloaded <a href="https://drive.google.com/file/d/1247n0F7d-8RhCgJLTbnUGEoaEu2_UO6M/" target="_blank">here</a>.
 
           <br/><br/>
           Credits go to KingsIsle Entertainment for Pirate101.
@@ -973,8 +992,8 @@
                 <option value="power">Power</option>
                 <option value="talent">Talent / Epic Talent</option>
               </select>
-              <span id="rnk-wrapper" hidden><br/>Rank:
-                <input id="rnk" oninput="updateRank()" value="1 of 3"></input>
+              <span id="rnk-wrapper" hidden><br/>Rank text:
+                <input id="rnk" oninput="updateRank()" value="Rank 1 of 3"></input>
               </span>
             </td>
           </tr>
@@ -988,7 +1007,7 @@
               Image zoom:<input type="number" id="zoom-input" value="100" min="10" max="500" oninput="updateMainImageSize()" style="text-align: right"></input>%
               <br/>
               <input type="checkbox" class="checkboxbox" id="frame-toggle" onclick="toggleFrame()">
-                <span class="even-smaller">Show Power frame + disable img scroll</span>
+                <span class="even-smaller">Show image frame + disable img scroll</span>
               </input>
             </td>
           </tr>
@@ -1268,12 +1287,44 @@
               <img class="icon" src="ability-creator-images/icons/W101 Afterlife_L.png"></img>
             </td>
           </tr>
+          <tr>
         </table>
       </div>
 
       </td>
       </tr>
       </table>
+
+      <div class="sizetag">
+        <h3>Size Tags</h3>
+        (use in moderation, most icons sizes work best with no size tag)
+        <table style="width: 300px;">
+          <tr>
+            <td>
+              195<img class="icon" src="ability-creator-images/icons/Physical Damage_L.png"></img> (no size tag)
+            </td>
+            <td style="font-family: Comic Sans MS">
+              195<img class="icon" src="ability-creator-images/icons/Physical Damage_L.png"></img>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              [medium]195<img class="icon" src="ability-creator-images/icons/Physical Damage_L.png"></img>[/medium]
+            </td>
+            <td style="font-family: Comic Sans MS">
+              <span class="size125">195<img class="icon" src="ability-creator-images/icons/Physical Damage_L.png"></img></span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              [large]195<img class="icon" src="ability-creator-images/icons/Physical Damage_L.png"></img>[/large]
+            </td>
+            <td style="font-family: Comic Sans MS">
+              <span class="size150">195<img class="icon" src="ability-creator-images/icons/Physical Damage_L.png"></img></span>
+            </td>
+          </tr>
+        </table>
+      </div>
 
       <div id="resultimagecont">
       </div>

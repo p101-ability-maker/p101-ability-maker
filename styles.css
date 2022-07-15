@@ -94,3 +94,12 @@ input, select {
 .creator select { color: black; box-shadow: none; text-align: left; }
 
 #tl-text,#tr-text,#bl-text,#br-text { cursor: context-menu; }
+
+.creatorbox .sizetag {
+  position: relative;
+  left: 50%;
+  width: 300px;
+
+  transform: translate(-50%, 0);
+  -ms-transform: translate(-50%, 0);
+}
